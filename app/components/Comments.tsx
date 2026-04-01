@@ -39,7 +39,7 @@ export default function Comments({ articleId }: { articleId: string }) {
       .eq('article_id', articleId)
       .eq('status', 'approved')
       .order('created_at', { ascending: false });
-    setComments((data || []) as Comment[]);
+setComments((data || []) as unknown as Comment[]);
     setFetching(false);
   }, [articleId, supabase]);
 
