@@ -1,0 +1,37 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Exo+2:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap');
+
+body {
+  background-color: #05050a;
+  background-image:
+    linear-gradient(rgba(0,255,136,.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,255,136,.02) 1px, transparent 1px);
+  background-size: 60px 60px;
+  font-family: 'Exo 2', system-ui, sans-serif;
+  color: #c8c8e0;
+}
+
+.font-display {
+  font-family: 'Rajdhani', Impact, sans-serif;
+  letter-spacing: .02em;
+}
+
+.gaming-card {
+  background: #111120;
+  border: 1px solid #252540;
+  transition: all 0.2s ease;
+}
+
+.gaming-card:hover {
+  border-color: rgba(0,255,136,.3);
+  box-shadow: 0 8px 40px rgba(0,255,136,.1);
+  transform: translateY(-2px);
+}
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #0a0a12; }
+::-webkit-scrollbar-thumb { background: #252540; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #00ff88; }
