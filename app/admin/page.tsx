@@ -8,6 +8,16 @@ export default async function AdminArticlesPage() {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect('/login');
 
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('role')
+    .eq('id', user.id)
+    .single();
+
+  if (!profile || !['admin', 'editor'].includes(profile.role)) {
+    redirect('/');
+  }
+
   const { data: articles } = await supabase
     .from('articles')
     .select(`id, title, slug, status, created_at, categories(name, color)`)
