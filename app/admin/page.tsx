@@ -1,6 +1,7 @@
 import { createClient } from '@/lib/supabase/server';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
+import DeleteArticleButton from './articles/DeleteArticleButton';
 
 export default async function AdminArticlesPage() {
   const supabase = createClient();
@@ -64,6 +65,7 @@ export default async function AdminArticlesPage() {
                     <div style={{ display: 'flex', gap: 10 }}>
                       <Link href={`/articles/${article.slug}`} style={{ fontSize: 12, color: '#6b6b8a', textDecoration: 'none' }}>View</Link>
                       <Link href={`/admin/articles/${article.id}/edit`} style={{ fontSize: 12, color: '#00e5ff', textDecoration: 'none' }}>Edit</Link>
+                      <DeleteArticleButton id={article.id} />
                     </div>
                   </td>
                 </tr>
