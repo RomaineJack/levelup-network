@@ -1,6 +1,7 @@
 import { createClient } from '@/lib/supabase/server';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
+import DeleteArticleButton from './DeleteArticleButton';
 
 export default async function AdminArticlesPage() {
   const supabase = createClient();
@@ -49,7 +50,7 @@ export default async function AdminArticlesPage() {
                   </td>
                   <td style={{ padding: '12px 16px' }}>
                     {article.categories ? (
-                      <span style={{ fontSize: 12, color: (article.categories as any).color || '#00ff88' }}>{(article.categories as any).name}</span>
+                      <span style={{ fontSize: 12, color: article.categories.color || '#00ff88' }}>{article.categories.name}</span>
                     ) : <span style={{ color: '#6b6b8a', fontSize: 12 }}>—</span>}
                   </td>
                   <td style={{ padding: '12px 16px' }}>
@@ -61,9 +62,10 @@ export default async function AdminArticlesPage() {
                     {new Date(article.created_at).toLocaleDateString()}
                   </td>
                   <td style={{ padding: '12px 16px' }}>
-                    <div style={{ display: 'flex', gap: 10 }}>
+                    <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
                       <Link href={`/articles/${article.slug}`} style={{ fontSize: 12, color: '#6b6b8a', textDecoration: 'none' }}>View</Link>
                       <Link href={`/admin/articles/${article.id}/edit`} style={{ fontSize: 12, color: '#00e5ff', textDecoration: 'none' }}>Edit</Link>
+                      <DeleteArticleButton id={article.id} />
                     </div>
                   </td>
                 </tr>
