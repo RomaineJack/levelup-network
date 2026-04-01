@@ -1,13 +1,27 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import Link from 'next/link';
+import { createClient } from '@/lib/supabase/server';
 
 export const metadata: Metadata = {
   title: 'LevelUp Network — Your Ultimate Gaming Hub',
   description: 'The latest gaming news, reviews, guides, and community.',
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const supabase = createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+
+  let profile = null;
+  if (user) {
+    const { data } = await supabase
+      .from('profiles')
+      .select('display_name, username, role')
+      .eq('id', user.id)
+      .single();
+    profile = data;
+  }
+
   return (
     <html lang="en">
       <body>
@@ -33,10 +47,30 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             ))}
           </nav>
           <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
-            <Link href="/login" style={{ fontSize: 13, color: '#888', textDecoration: 'none' }}>Log In</Link>
-            <Link href="/signup" style={{ fontSize: 12, fontWeight: 700, background: '#00ff88', color: '#05050a', padding: '7px 18px', borderRadius: 7, textDecoration: 'none', fontFamily: 'Rajdhani, sans-serif', letterSpacing: '.06em' }}>
-              JOIN FREE
-            </Link>
+            {user && profile ? (
+              <>
+                <Link href="/dashboard" style={{ fontSize: 13, color: '#888', textDecoration: 'none' }}>
+                  👤 {profile.display_name || profile.username}
+                </Link>
+                {['admin', 'editor'].includes(profile.role) && (
+                  <Link href="/admin" style={{ fontSize: 12, fontWeight: 700, color: '#00ff88', textDecoration: 'none', fontFamily: 'Rajdhani, sans-serif', letterSpacing: '.04em' }}>
+                    ADMIN
+                  </Link>
+                )}
+                <form action="/auth/signout" method="POST">
+                  <button type="submit" style={{ fontSize: 12, color: '#888', background: 'none', border: 'none', cursor: 'pointer', padding: '6px 12px' }}>
+                    Sign Out
+                  </button>
+                </form>
+              </>
+            ) : (
+              <>
+                <Link href="/login" style={{ fontSize: 13, color: '#888', textDecoration: 'none' }}>Log In</Link>
+                <Link href="/signup" style={{ fontSize: 12, fontWeight: 700, background: '#00ff88', color: '#05050a', padding: '7px 18px', borderRadius: 7, textDecoration: 'none', fontFamily: 'Rajdhani, sans-serif', letterSpacing: '.06em' }}>
+                  JOIN FREE
+                </Link>
+              </>
+            )}
           </div>
         </header>
         <main style={{ minHeight: 'calc(100vh - 64px)' }}>
