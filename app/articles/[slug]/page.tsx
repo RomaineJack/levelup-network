@@ -1,6 +1,7 @@
 import { createClient } from '@/lib/supabase/server';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
+import Comments from '../../components/Comments';
 
 export default async function ArticlePage({ params }: { params: { slug: string } }) {
   const supabase = createClient();
@@ -73,6 +74,7 @@ export default async function ArticlePage({ params }: { params: { slug: string }
       <div style={{ paddingTop: 24, borderTop: '1px solid #252540' }}>
         <Link href="/articles" style={{ fontSize: 14, color: '#00ff88', textDecoration: 'none' }}>← Back to Articles</Link>
       </div>
+      <Comments articleId={article.id} />
     </div>
   );
 }
