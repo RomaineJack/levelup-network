@@ -2,6 +2,7 @@ import { createClient } from '@/lib/supabase/server';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import Comments from '../../components/Comments';
+import LikeButton from '../../components/LikeButton';
 
 export default async function ArticlePage({ params }: { params: { slug: string } }) {
   const supabase = createClient();
@@ -87,11 +88,12 @@ export default async function ArticlePage({ params }: { params: { slug: string }
 )}
       </div>
 
-      {/* Back link */}
-      <div style={{ paddingTop: 24, borderTop: '1px solid #252540' }}>
-        <Link href="/articles" style={{ fontSize: 14, color: '#00ff88', textDecoration: 'none' }}>← Back to Articles</Link>
-      </div>
-      <Comments articleId={article.id} articleTitle={article.title} />
+{/* Like + Back */}
+<div style={{ paddingTop: 24, borderTop: '1px solid #252540', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 12 }}>
+  <Link href="/articles" style={{ fontSize: 14, color: '#00ff88', textDecoration: 'none' }}>← Back to Articles</Link>
+  <LikeButton articleId={article.id} />
+</div>
+
     </div>
   );
 }
