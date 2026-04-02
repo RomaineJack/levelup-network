@@ -25,7 +25,6 @@ export default function EditArticlePage({ params }: { params: { id: string } }) 
         .select(`*, categories(name)`)
         .eq('id', params.id)
         .single();
-
       if (data) {
         setTitle(data.title || '');
         setSlug(data.slug || '');
@@ -52,17 +51,27 @@ export default function EditArticlePage({ params }: { params: { id: string } }) 
     setCoverUrl(urlData.publicUrl);
   };
 
+  const handleYoutube = () => {
+    const url = prompt('Paste YouTube URL:');
+    if (url) {
+      const match = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]+)/);
+      if (match) {
+        setContent(prev => prev + `\n\n[youtube:${match[1]}]\n\n`);
+      } else {
+        alert('Please paste a valid YouTube URL');
+      }
+    }
+  };
+
   const handleSave = async (saveStatus: string) => {
     if (!title.trim()) { setError('Title is required'); return; }
     setLoading(true);
     setError('');
-
     const { data: catData } = await supabase
       .from('categories')
       .select('id')
       .eq('name', category)
       .single();
-
     const { error } = await supabase
       .from('articles')
       .update({
@@ -76,7 +85,6 @@ export default function EditArticlePage({ params }: { params: { id: string } }) 
         published_at: saveStatus === 'published' ? new Date().toISOString() : null,
       })
       .eq('id', params.id);
-
     if (error) {
       setError(error.message);
       setLoading(false);
@@ -142,17 +150,27 @@ export default function EditArticlePage({ params }: { params: { id: string } }) 
           <div>
             <label style={{ display: 'block', fontSize: 11, fontWeight: 700, letterSpacing: '.08em', textTransform: 'uppercase', color: '#888', marginBottom: 8 }}>Content</label>
             <div style={{ background: '#0a0a12', border: '1px solid #252540', borderRadius: 10, overflow: 'hidden' }}>
-              <div style={{ display: 'flex', gap: 3, padding: '8px 12px', background: '#111120', borderBottom: '1px solid #252540', flexWrap: 'wrap' }}>
-                {['B', 'I', 'U', '|', 'H1', 'H2', 'H3', '|', '≡', '""', '|', '🔗', '🖼', '▶'].map((btn, i) =>
+              <div style={{ display: 'flex', gap: 3, padding: '8px 12px', background: '#111120', borderBottom: '1px solid #252540', flexWrap: 'wrap', alignItems: 'center' }}>
+                {['B', 'I', 'U', '|', 'H1', 'H2', 'H3', '|', '≡', '""'].map((btn, i) =>
                   btn === '|'
                     ? <div key={i} style={{ width: 1, background: '#252540', height: 22, margin: '0 4px' }} />
                     : <button key={i} style={{ padding: '4px 8px', borderRadius: 4, fontSize: 12, color: '#6b6b8a', cursor: 'pointer', border: 'none', background: 'transparent' }}>{btn}</button>
                 )}
+                <div style={{ width: 1, background: '#252540', height: 22, margin: '0 4px' }} />
+                <button
+                  type="button"
+                  onClick={handleYoutube}
+                  style={{ padding: '4px 10px', borderRadius: 4, fontSize: 12, color: '#ff6b35', cursor: 'pointer', border: '1px solid rgba(255,107,53,.3)', background: 'rgba(255,107,53,.1)' }}
+                >
+                  ▶ YouTube
+                </button>
               </div>
               <textarea
                 value={content}
                 onChange={e => setContent(e.target.value)}
-                placeholder="Write your article here..."
+                placeholder={`Write your article here...
+
+To embed a YouTube video click the ▶ YouTube button above.`}
                 rows={18}
                 style={{ width: '100%', background: 'transparent', border: 'none', padding: '16px', color: '#c8c8e0', fontSize: 15, lineHeight: 1.8, resize: 'none', outline: 'none', fontFamily: 'Exo 2, sans-serif', boxSizing: 'border-box' }}
               />

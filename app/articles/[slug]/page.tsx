@@ -62,12 +62,29 @@ export default async function ArticlePage({ params }: { params: { slug: string }
       {/* Content */}
       <div style={{ fontSize: 16, lineHeight: 1.85, color: '#c8c8e0', marginBottom: 32 }}>
         {article.content_text ? (
-          article.content_text.split('\n\n').filter(Boolean).map((para: string, i: number) => (
-            <p key={i} style={{ marginBottom: 20 }}>{para}</p>
-          ))
-        ) : (
-          <p style={{ color: '#6b6b8a' }}>No content yet.</p>
-        )}
+  article.content_text.split('\n\n').filter(Boolean).map((para: string, i: number) => {
+    const youtubeMatch = para.trim().match(/^\[youtube:([a-zA-Z0-9_-]+)\]$/);
+    if (youtubeMatch) {
+      return (
+        <div key={i} style={{ marginBottom: 24, borderRadius: 12, overflow: 'hidden', aspectRatio: '16/9' }}>
+          <iframe
+            width="100%"
+            height="100%"
+            src={`https://www.youtube.com/embed/${youtubeMatch[1]}`}
+            title="YouTube video"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+            style={{ display: 'block', borderRadius: 12, border: '1px solid #252540' }}
+          />
+        </div>
+      );
+    }
+    return <p key={i} style={{ marginBottom: 20 }}>{para}</p>;
+  })
+) : (
+  <p style={{ color: '#6b6b8a' }}>No content yet.</p>
+)}
       </div>
 
       {/* Back link */}
