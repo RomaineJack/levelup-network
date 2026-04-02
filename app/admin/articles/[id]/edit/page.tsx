@@ -91,12 +91,10 @@ export default function EditArticlePage({ params }: { params: { id: string } }) 
       setLoading(false);
     } else {
       await logActivity(
-        saveStatus === 'published' ? 'article_published' : 'article_updated',
-        saveStatus === 'published'
-          ? `Published article: "${title.trim()}"`
-          : `Updated article: "${title.trim()}"`,
-        { slug: slug.trim() }
-      );
+  'article_updated',
+  `Updated article: "${title.trim()}"`,
+  { slug: slug.trim() }
+);
       router.push('/admin/articles');
     }
   };

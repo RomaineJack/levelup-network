@@ -57,14 +57,15 @@ export default function ActivityPage() {
   useEffect(() => { fetchActivities(); }, [fetchActivities]);
 
   const filters = [
-    { value: 'all', label: 'All Activity' },
-    { value: 'article_published', label: '📰 Published' },
-    { value: 'article_updated', label: '✏️ Updated' },
-    { value: 'article_deleted', label: '🗑️ Deleted' },
-    { value: 'comment_deleted', label: '💬 Comments' },
-    { value: 'user_role_changed', label: '👥 Roles' },
-    { value: 'user_joined', label: '🎮 New Users' },
-  ];
+  { value: 'all', label: 'All Activity' },
+  { value: 'article_published', label: '📰 Published' },
+  { value: 'article_updated', label: '✏️ Updated' },
+  { value: 'article_deleted', label: '🗑️ Deleted' },
+  { value: 'comment_posted', label: '💬 Comments' },
+  { value: 'comment_deleted', label: '🗑️ Deleted Comments' },
+  { value: 'user_role_changed', label: '👥 Roles' },
+  { value: 'user_joined', label: '🎮 New Users' },
+];
 
   const formatTime = (dateString: string) => {
     const date = new Date(dateString);
