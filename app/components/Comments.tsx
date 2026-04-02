@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect, useCallback } from 'react';
 import { createClient } from '@/lib/supabase/client';
+import { logActivity } from '@/lib/logActivity';
 
 const BANNED_WORDS = [
   'fuck', 'shit', 'ass', 'bitch', 'bastard', 'damn', 'crap',
@@ -23,7 +24,7 @@ interface Comment {
   profiles: { display_name: string | null; username: string } | null;
 }
 
-export default function Comments({ articleId }: { articleId: string }) {
+export default function Comments({ articleId, articleTitle }: { articleId: string; articleTitle?: string }) {
   const [comments, setComments] = useState<Comment[]>([]);
   const [content, setContent] = useState('');
   const [loading, setLoading] = useState(false);
@@ -39,7 +40,7 @@ export default function Comments({ articleId }: { articleId: string }) {
       .eq('article_id', articleId)
       .eq('status', 'approved')
       .order('created_at', { ascending: false });
-setComments((data || []) as unknown as Comment[]);
+    setComments((data || []) as unknown as Comment[]);
     setFetching(false);
   }, [articleId, supabase]);
 
@@ -70,6 +71,11 @@ setComments((data || []) as unknown as Comment[]);
     if (error) {
       setError('Failed to post comment. Please try again.');
     } else {
+      await logActivity(
+        'comment_posted',
+        `New comment on "${articleTitle || 'an article'}"`,
+        { articleId }
+      );
       setContent('');
       fetchComments();
     }
@@ -82,7 +88,6 @@ setComments((data || []) as unknown as Comment[]);
         💬 Comments <span style={{ fontSize: 16, color: '#6b6b8a', fontFamily: 'monospace' }}>({comments.length})</span>
       </h3>
 
-      {/* Comment Form */}
       {user ? (
         <form onSubmit={handleSubmit} style={{ marginBottom: 28 }}>
           {error && (
@@ -118,7 +123,6 @@ setComments((data || []) as unknown as Comment[]);
         </div>
       )}
 
-      {/* Comments List */}
       {fetching ? (
         <p style={{ color: '#6b6b8a', fontSize: 14 }}>Loading comments...</p>
       ) : comments.length === 0 ? (

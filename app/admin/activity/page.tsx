@@ -15,7 +15,8 @@ const ACTION_ICONS: Record<string, string> = {
   article_published: '📰',
   article_updated: '✏️',
   article_deleted: '🗑️',
-  comment_deleted: '💬',
+  comment_posted: '💬',
+  comment_deleted: '🗑️',
   user_role_changed: '👥',
   user_joined: '🎮',
 };
@@ -24,6 +25,7 @@ const ACTION_COLORS: Record<string, string> = {
   article_published: '#00ff88',
   article_updated: '#00e5ff',
   article_deleted: '#ff6b35',
+  comment_posted: '#00e5ff',
   comment_deleted: '#ffcc00',
   user_role_changed: '#ff00aa',
   user_joined: '#00ff88',
