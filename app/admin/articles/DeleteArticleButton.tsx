@@ -1,8 +1,9 @@
 'use client';
 import { createClient } from '@/lib/supabase/client';
 import { useRouter } from 'next/navigation';
+import { logActivity } from '@/lib/logActivity';
 
-export default function DeleteArticleButton({ id }: { id: string }) {
+export default function DeleteArticleButton({ id, title }: { id: string; title?: string }) {
   const router = useRouter();
   const supabase = createClient();
 
@@ -12,6 +13,11 @@ export default function DeleteArticleButton({ id }: { id: string }) {
     if (error) {
       alert('Failed to delete: ' + error.message);
     } else {
+      await logActivity(
+        'article_deleted',
+        `Deleted article: "${title || 'Untitled'}"`,
+        { articleId: id }
+      );
       router.refresh();
     }
   };

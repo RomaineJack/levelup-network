@@ -96,6 +96,7 @@ export default function EditArticlePage({ params }: { params: { id: string } }) 
     : `Saved draft: "${title.trim()}"`,
   { slug: slug.trim() }
 );
+
     } else {
       router.push('/admin/articles');
     }

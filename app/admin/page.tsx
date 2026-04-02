@@ -99,7 +99,7 @@ export default async function AdminPage() {
                   {article.status}
                 </span>
                 <Link href={`/admin/articles/${article.id}/edit`} style={{ fontSize: 12, color: '#6b6b8a', textDecoration: 'none' }}>Edit</Link>
-                <DeleteArticleButton id={article.id} />
+                <DeleteArticleButton id={article.id} title={article.title} />
               </div>
             </div>
           ))

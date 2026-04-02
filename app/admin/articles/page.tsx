@@ -65,7 +65,7 @@ export default async function AdminArticlesPage() {
                     <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
                       <Link href={`/articles/${article.slug}`} style={{ fontSize: 12, color: '#6b6b8a', textDecoration: 'none' }}>View</Link>
                       <Link href={`/admin/articles/${article.id}/edit`} style={{ fontSize: 12, color: '#00e5ff', textDecoration: 'none' }}>Edit</Link>
-                      <DeleteArticleButton id={article.id} />
+                      <DeleteArticleButton id={article.id} title={article.title} />
                     </div>
                   </td>
                 </tr>
