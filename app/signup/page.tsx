@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { createClient } from '@/lib/supabase/client';
+import { logActivity } from '@/lib/logActivity';
 import Link from 'next/link';
 
 export default function SignupPage() {
@@ -22,8 +23,13 @@ export default function SignupPage() {
       password,
       options: { data: { display_name: name } }
     });
-    if (error) { setError(error.message); setLoading(false); }
-    else setDone(true);
+    if (error) {
+      setError(error.message);
+      setLoading(false);
+    } else {
+      await logActivity('user_joined', `New user joined: ${name || email}`);
+      setDone(true);
+    }
   };
 
   if (done) return (
