@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect, useCallback } from 'react';
 import { createClient } from '@/lib/supabase/client';
+import { logActivity } from '@/lib/logActivity';
 
 interface Profile {
   id: string;
@@ -40,6 +41,7 @@ export default function AdminUsersPage() {
   }, [fetchUsers]);
 
   const updateRole = async (userId: string, role: string) => {
+    const user = users.find(u => u.id === userId);
     setUpdating(userId);
     const { error } = await supabase
       .from('profiles')
@@ -49,6 +51,11 @@ export default function AdminUsersPage() {
     if (error) {
       alert('Failed to update role');
     } else {
+      await logActivity(
+        'user_role_changed',
+        `Changed @${user?.username} role to ${role}`,
+        { userId, newRole: role }
+      );
       setUsers(prev => prev.map(u => u.id === userId ? { ...u, role } : u));
     }
     setUpdating(null);
@@ -61,7 +68,6 @@ export default function AdminUsersPage() {
         <p style={{ color: '#6b6b8a', fontSize: 14, marginTop: 4 }}>Manage member roles and permissions</p>
       </div>
 
-      {/* Role legend */}
       <div style={{ display: 'flex', gap: 12, marginBottom: 20, flexWrap: 'wrap' }}>
         {[
           { role: 'admin', color: '#ff00aa', desc: 'Full access to everything' },
@@ -75,7 +81,6 @@ export default function AdminUsersPage() {
         ))}
       </div>
 
-      {/* Search */}
       <div style={{ position: 'relative', maxWidth: 320, marginBottom: 20 }}>
         <span style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', color: '#6b6b8a' }}>🔍</span>
         <input
@@ -87,7 +92,6 @@ export default function AdminUsersPage() {
         />
       </div>
 
-      {/* Users Table */}
       <div style={{ background: '#111120', border: '1px solid #252540', borderRadius: 12, overflow: 'hidden' }}>
         <table style={{ width: '100%', borderCollapse: 'collapse' }}>
           <thead>

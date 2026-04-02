@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { logActivity } from '@/lib/logActivity';
 
 export default function EditArticlePage({ params }: { params: { id: string } }) {
   const [title, setTitle] = useState('');
@@ -88,6 +89,13 @@ export default function EditArticlePage({ params }: { params: { id: string } }) 
     if (error) {
       setError(error.message);
       setLoading(false);
+      await logActivity(
+  saveStatus === 'published' ? 'article_published' : 'article_updated',
+  saveStatus === 'published'
+    ? `Published article: "${title.trim()}"`
+    : `Saved draft: "${title.trim()}"`,
+  { slug: slug.trim() }
+);
     } else {
       router.push('/admin/articles');
     }

@@ -2,6 +2,8 @@
 import { useState } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import { useRouter } from 'next/navigation';
+import { logActivity } from '@/lib/logActivity';
+
 
 export default function NewArticlePage() {
   const [title, setTitle] = useState('');
@@ -57,6 +59,14 @@ export default function NewArticlePage() {
       status: saveStatus,
       published_at: saveStatus === 'published' ? new Date().toISOString() : null,
     });
+
+    await logActivity(
+  saveStatus === 'published' ? 'article_published' : 'article_updated',
+  saveStatus === 'published'
+    ? `Published article: "${title.trim()}"`
+    : `Saved draft: "${title.trim()}"`,
+  { slug: slug.trim() }
+);
 
     if (error) {
       setError(error.message);

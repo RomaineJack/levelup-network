@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect, useCallback } from 'react';
 import { createClient } from '@/lib/supabase/client';
+import { logActivity } from '@/lib/logActivity';
 
 interface Comment {
   id: string;
@@ -35,12 +36,13 @@ export default function AdminCommentsPage() {
 
   useEffect(() => { fetchComments(); }, [fetchComments]);
 
-  const deleteComment = async (id: string) => {
+  const deleteComment = async (id: string, articleTitle?: string) => {
     if (!confirm('Delete this comment permanently?')) return;
     const { error } = await supabase.from('comments').delete().eq('id', id);
     if (error) {
       alert('Failed to delete comment');
     } else {
+      await logActivity('comment_deleted', `Deleted a comment on "${articleTitle || 'an article'}"`);
       setComments(prev => prev.filter(c => c.id !== id));
     }
   };
@@ -54,7 +56,6 @@ export default function AdminCommentsPage() {
         <p style={{ color: '#6b6b8a', fontSize: 14, marginTop: 4 }}>Manage and delete user comments</p>
       </div>
 
-      {/* Filters */}
       <div style={{ display: 'flex', gap: 8, marginBottom: 24 }}>
         {filters.map(f => (
           <button
@@ -67,7 +68,6 @@ export default function AdminCommentsPage() {
         ))}
       </div>
 
-      {/* Comments List */}
       {loading ? (
         <p style={{ color: '#6b6b8a' }}>Loading comments...</p>
       ) : comments.length === 0 ? (
@@ -98,7 +98,7 @@ export default function AdminCommentsPage() {
                   <p style={{ fontSize: 14, color: '#c8c8e0', lineHeight: 1.65 }}>{comment.content}</p>
                 </div>
                 <button
-                  onClick={() => deleteComment(comment.id)}
+                  onClick={() => deleteComment(comment.id, comment.articles?.title)}
                   style={{ padding: '6px 14px', background: 'rgba(255,107,53,.1)', border: '1px solid rgba(255,107,53,.3)', color: '#ff6b35', borderRadius: 6, fontSize: 12, fontWeight: 700, fontFamily: 'Rajdhani, sans-serif', cursor: 'pointer', flexShrink: 0 }}
                 >
                   Delete

@@ -47,7 +47,7 @@ export default async function AdminPage() {
       </div>
 
       {/* Stats */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 14, marginBottom: 28 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 14, marginBottom: 28 }}>
         {[
           { icon: '📄', label: 'Total Articles', value: totalArticles || 0, color: '#00e5ff' },
           { icon: '💬', label: 'Pending Comments', value: pendingComments || 0, color: '#ff6b35' },
@@ -68,6 +68,7 @@ export default async function AdminPage() {
           { href: '/admin/articles/new', label: '✏️ New Article' },
           { href: '/admin/comments', label: '💬 Manage Comments' },
           { href: '/admin/users', label: '👥 Manage Users' },
+          { href: '/admin/activity', label: '📋 Activity Log' },
         ].map(({ href, label }) => (
           <Link key={href} href={href} style={{ padding: '12px 16px', background: '#111120', border: '1px solid #252540', borderRadius: 8, color: '#aaa', textDecoration: 'none', fontSize: 13, textAlign: 'center' }}>
             {label}
