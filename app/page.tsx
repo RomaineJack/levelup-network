@@ -52,9 +52,12 @@ export default async function HomePage() {
           {articles.map((article: any) => (
             <Link key={article.id} href={`/articles/${article.slug}`} style={{ textDecoration: 'none' }}>
               <div className="gaming-card" style={{ borderRadius: 12, overflow: 'hidden', height: '100%' }}>
-                <div style={{ height: 160, background: '#1a1a2e', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 48 }}>
-                  🎮
-                </div>
+                <div style={{ height: 160, background: '#1a1a2e', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 48, overflow: 'hidden' }}>
+  {article.cover_image_url
+    ? <img src={article.cover_image_url} alt={article.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+    : '🎮'
+  }
+</div>
                 <div style={{ padding: 16 }}>
                   {(article.categories as any) && (
                     <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: '.08em', textTransform: 'uppercase', color: (article.categories as any).color || '#00ff88', background: `${(article.categories as any).color}22`, padding: '2px 8px', borderRadius: 4, marginBottom: 8, display: 'inline-block' }}>
