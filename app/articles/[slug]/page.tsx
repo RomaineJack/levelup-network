@@ -94,6 +94,7 @@ export default async function ArticlePage({ params }: { params: { slug: string }
   <LikeButton articleId={article.id} />
 </div>
 
+   <Comments articleId={article.id} articleTitle={article.title} />
     </div>
   );
 }
