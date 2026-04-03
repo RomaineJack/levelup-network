@@ -19,20 +19,7 @@ export default function AboutPage() {
         </p>
       </div>
 
-      {/* Stats */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 14, marginBottom: 48 }}>
-        {[
-          { value: '500+', label: 'Articles Published' },
-          { value: '50K+', label: 'Monthly Readers' },
-          { value: '8', label: 'Content Categories' },
-          { value: '2019', label: 'Founded' },
-        ].map(({ value, label }) => (
-          <div key={label} style={{ background: '#111120', border: '1px solid #252540', borderRadius: 12, padding: 24, textAlign: 'center' }}>
-            <div style={{ fontSize: 28, fontWeight: 700, color: '#00ff88', fontFamily: 'monospace', marginBottom: 6 }}>{value}</div>
-            <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '.1em', textTransform: 'uppercase', color: '#6b6b8a' }}>{label}</div>
-          </div>
-        ))}
-      </div>
+      
 
       {/* Mission */}
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 18, marginBottom: 48 }}>
