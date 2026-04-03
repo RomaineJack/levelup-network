@@ -1,11 +1,7 @@
 export default function AboutPage() {
-  const team = [
-    { name: 'Romaine Jackson', role: 'Founder & Editor-in-Chief', bio: 'Gaming since the NES era. Believes great games journalism makes the industry better.', emoji: '🎮' },
-    { name: 'Jordan Kim', role: 'Senior Reviews Editor', bio: 'RPG specialist and trophy hunter. Has beaten every FromSoftware game at least twice.', emoji: '⚔️' },
-    { name: 'Sam Torres', role: 'Esports Correspondent', bio: 'Former competitive player. Covers the biggest tournaments around the world.', emoji: '🏆' },
-    { name: 'Morgan Lee', role: 'Hardware Editor', bio: 'Builds a new PC every year. Knows the benchmark for every GPU released since 2010.', emoji: '🖥️' },
+    const team = [
+    { name: 'Romaine Jackson', role: 'Founder & Editor-in-Chief', bio: 'Passionate gamer and content creator behind LevelUp Network. Building the ultimate gaming hub one article at a time.', emoji: '🎮' },
   ];
-
   return (
     <div style={{ maxWidth: 1000, margin: '0 auto', padding: '48px 24px' }}>
 
