@@ -71,6 +71,13 @@ export default function NewArticlePage() {
     if (error) {
       setError(error.message);
       setLoading(false);
+      await logActivity(
+  saveStatus === 'published' ? 'article_published' : 'article_updated',
+  saveStatus === 'published'
+    ? `Published article: "${title.trim()}"`
+    : `Saved draft: "${title.trim()}"`,
+  { slug: slug.trim() }
+);
     } else {
       router.push('/admin/articles');
     }

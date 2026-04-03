@@ -97,18 +97,24 @@ export default function ContactPage() {
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-          {[
-            { icon: '📧', title: 'Email Us', content: 'hello@levelup.network', sub: 'For press and business inquiries' },
-            { icon: '🐦', title: 'Twitter', content: '@LevelUpNetwork', sub: 'Follow for breaking news' },
-            { icon: '💜', title: 'Discord', content: 'Join our community', sub: 'Chat with other gamers' },
-          ].map(({ icon, title, content, sub }) => (
-            <div key={title} style={{ background: '#111120', border: '1px solid #252540', borderRadius: 12, padding: 20 }}>
-              <div style={{ fontSize: 22, marginBottom: 8 }}>{icon}</div>
-              <h3 className="font-display" style={{ fontSize: 15, fontWeight: 700, color: '#fff', marginBottom: 4 }}>{title}</h3>
-              <p style={{ fontSize: 13, color: '#00ff88', marginBottom: 4 }}>{content}</p>
-              <p style={{ fontSize: 12, color: '#6b6b8a' }}>{sub}</p>
-            </div>
-          ))}
+          <div style={{ background: '#111120', border: '1px solid #252540', borderRadius: 12, padding: 20 }}>
+            <div style={{ fontSize: 22, marginBottom: 8 }}>📧</div>
+            <h3 className="font-display" style={{ fontSize: 15, fontWeight: 700, color: '#fff', marginBottom: 4 }}>Email Us</h3>
+            <p style={{ fontSize: 13, color: '#00ff88', marginBottom: 4 }}>romainecontact@levelupgg.net</p>
+            <p style={{ fontSize: 12, color: '#6b6b8a' }}>For press and business inquiries</p>
+          </div>
+          <div style={{ background: '#111120', border: '1px solid #252540', borderRadius: 12, padding: 20 }}>
+            <div style={{ fontSize: 22, marginBottom: 8 }}>🐦</div>
+            <h3 className="font-display" style={{ fontSize: 15, fontWeight: 700, color: '#fff', marginBottom: 4 }}>Twitter</h3>
+            <p style={{ fontSize: 13, color: '#00ff88', marginBottom: 4 }}>@LevelUpGG</p>
+            <p style={{ fontSize: 12, color: '#6b6b8a' }}>Follow for breaking news</p>
+          </div>
+          <div style={{ background: '#111120', border: '1px solid #252540', borderRadius: 12, padding: 20 }}>
+            <div style={{ fontSize: 22, marginBottom: 8 }}>💜</div>
+            <h3 className="font-display" style={{ fontSize: 15, fontWeight: 700, color: '#fff', marginBottom: 4 }}>Discord</h3>
+            <a href="https://discord.gg/9NMeQ2py4f" target="_blank" rel="noopener noreferrer" style={{ fontSize: 13, color: '#00ff88', marginBottom: 4, display: 'block', textDecoration: 'none' }}>Join our Discord</a>
+            <p style={{ fontSize: 12, color: '#6b6b8a' }}>Chat with other gamers</p>
+          </div>
           <div style={{ background: '#111120', border: '1px solid #252540', borderRadius: 12, padding: 20 }}>
             <h3 className="font-display" style={{ fontSize: 15, fontWeight: 700, color: '#fff', marginBottom: 12 }}>Response Times</h3>
             {[['General', '48 hours'], ['Press/Review', '24 hours'], ['Partnerships', '72 hours']].map(([k, v]) => (

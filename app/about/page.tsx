@@ -1,7 +1,8 @@
 export default function AboutPage() {
-    const team = [
+  const team = [
     { name: 'Romaine Jackson', role: 'Founder & Editor-in-Chief', bio: 'Passionate gamer and content creator behind LevelUp Network. Building the ultimate gaming hub one article at a time.', emoji: '🎮' },
   ];
+
   return (
     <div style={{ maxWidth: 1000, margin: '0 auto', padding: '48px 24px' }}>
 
@@ -14,8 +15,6 @@ export default function AboutPage() {
           We are a passionate team of gamers, critics, and journalists dedicated to covering the games industry with depth, honesty, and enthusiasm.
         </p>
       </div>
-
-      
 
       {/* Mission */}
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 18, marginBottom: 48 }}>
@@ -38,7 +37,7 @@ export default function AboutPage() {
       {/* Team */}
       <div style={{ marginBottom: 48 }}>
         <h2 className="font-display" style={{ fontSize: 28, fontWeight: 700, color: '#fff', letterSpacing: '.04em', marginBottom: 20 }}>👥 THE TEAM</h2>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 14 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 14 }}>
           {team.map(({ name, role, bio, emoji }) => (
             <div key={name} style={{ background: '#111120', border: '1px solid #252540', borderRadius: 12, padding: 20, textAlign: 'center' }}>
               <div style={{ fontSize: 40, marginBottom: 14 }}>{emoji}</div>
@@ -57,9 +56,14 @@ export default function AboutPage() {
         <p style={{ fontSize: 15, color: '#8888aa', marginBottom: 24, maxWidth: 480, margin: '0 auto 24px' }}>
           Are you a passionate gamer with a voice? Pitch us your ideas.
         </p>
-        <a href="/contact" style={{ padding: '10px 28px', background: '#00ff88', color: '#05050a', borderRadius: 8, fontWeight: 700, textDecoration: 'none', fontFamily: 'Rajdhani, sans-serif', letterSpacing: '.04em' }}>
-          GET IN TOUCH
-        </a>
+        <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
+          <a href="/contact" style={{ padding: '10px 28px', background: '#00ff88', color: '#05050a', borderRadius: 8, fontWeight: 700, textDecoration: 'none', fontFamily: 'Rajdhani, sans-serif', letterSpacing: '.04em' }}>
+            GET IN TOUCH
+          </a>
+          <a href="https://discord.gg/9NMeQ2py4f" target="_blank" rel="noopener noreferrer" style={{ padding: '10px 28px', background: 'transparent', border: '1px solid #252540', color: '#aaa', borderRadius: 8, fontWeight: 700, textDecoration: 'none', fontFamily: 'Rajdhani, sans-serif', letterSpacing: '.04em' }}>
+            💜 JOIN DISCORD
+          </a>
+        </div>
       </div>
     </div>
   );
